@@ -24,8 +24,6 @@ var v4 = createSprite(330, 110, 20,200);
 v4.shapeColor = "blue";
 var v5 = createSprite(300, 320, 20, 140);
 v5.shapeColor = "blue";
-var chegada = createSprite(350, 375, 80, 26);
-chegada.shapeColor = "yellow";
 var jogador = createSprite(40, 390, 20, 20);
 jogador.setAnimation("jogador");
 jogador.scale = 0.3;
@@ -70,9 +68,29 @@ ponto26.shapeColor = "white";
 var ponto27 = createSprite(360, 200, 10, 10);
 ponto27.shapeColor = "white";
 var pontos = 0;
+var chegada = 0;
+var chegada = createSprite(350, 375, 80, 26);
+chegada.shapeColor = "yellow";
+var vitoria = createSprite(5000, 200);
+vitoria.setAnimation("vitoria");
+vitoria.scale = 0.8;
+var perdeu = createSprite(5000, 200);
+perdeu.setAnimation("perdeu");
+perdeu.scale = 0.8;
+var refazer = createSprite(381, 21);
+refazer.setAnimation("refazer");
+refazer.scale = 0.08;
 
 
 
+function chegadaf() {
+  if (jogador.isTouching(chegada)&&pontos == 19) {
+    vitoria.x = 200;
+  } 
+  if (jogador.isTouching(chegada)&&pontos < 19) {
+    perdeu.x = 200;
+  }
+}
 function colidir() {
   jogador.collide(p1);
   jogador.collide(p2);
@@ -177,6 +195,7 @@ function pontuacao() {
     ponto27.x = 5000;
     pontos += 1;
   }
+
 }
 function movimentos() {
   if (keyDown("up")) {
@@ -197,6 +216,9 @@ function movimentos() {
   }
 }
 function draw() {
+  if (mousePressedOver(refazer)) {
+    
+  }
   background("black");
   colidir();
   movimentos();
@@ -204,5 +226,6 @@ function draw() {
   textSize(20);
   fill("yellow");
   text("P: " + pontos, 20, 25);
+  chegadaf();
   drawSprites();
 }
